@@ -33,6 +33,16 @@ public class BookstoreApplication {
                 "2212343-5",
                 12.90
             ));
+
+            repository.findAll().forEach(book -> {
+                System.out.println(
+                    book.getTitle() + " | " +
+                    book.getAuthor() + " | " +
+                    book.getPublicationYear() + " | " +
+                    book.getIsbn() + " | " +
+                    book.getPrice()
+                );
+            });
         };
     }
 }
