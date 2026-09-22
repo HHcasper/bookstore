@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 
 import backend.bookstore.domain.Book;
 import backend.bookstore.domain.BookRepository;
+import backend.bookstore.domain.Category;
+import backend.bookstore.domain.CategoryRepository;
 
 @SpringBootApplication
 public class BookstoreApplication {
@@ -16,32 +18,54 @@ public class BookstoreApplication {
     }
 
     @Bean
-    public CommandLineRunner demo(BookRepository repository) {
+    public CommandLineRunner demo(
+            BookRepository bookRepository,
+            CategoryRepository categoryRepository) {
+
         return (args) -> {
-            repository.save(new Book(
-                "A Farewell to Arms",
-                "Ernest Hemingway",
-                1929,
-                "1232323-21",
-                15.90
+
+            // Save sample categories
+            Category adventure = categoryRepository.save(
+                    new Category("Adventure")
+            );
+
+            Category classic = categoryRepository.save(
+                    new Category("Classic")
+            );
+
+            Category dystopian = categoryRepository.save(
+                    new Category("Dystopian")
+            );
+
+            // Save sample books with categories
+            bookRepository.save(new Book(
+                    "A Farewell to Arms",
+                    "Ernest Hemingway",
+                    1929,
+                    "1232323-21",
+                    15.90,
+                    classic
             ));
 
-            repository.save(new Book(
-                "Animal Farm",
-                "George Orwell",
-                1945,
-                "2212343-5",
-                12.90
+            bookRepository.save(new Book(
+                    "Animal Farm",
+                    "George Orwell",
+                    1945,
+                    "2212343-5",
+                    12.90,
+                    dystopian
             ));
 
-            repository.findAll().forEach(book -> {
-                System.out.println(
-                    book.getTitle() + " | " +
-                    book.getAuthor() + " | " +
-                    book.getPublicationYear() + " | " +
-                    book.getIsbn() + " | " +
-                    book.getPrice()
-                );
+            // Print categories
+            System.out.println("Fetch all categories:");
+            categoryRepository.findAll().forEach(category -> {
+                System.out.println(category);
+            });
+
+            // Print books
+            System.out.println("Fetch all books:");
+            bookRepository.findAll().forEach(book -> {
+                System.out.println(book);
             });
         };
     }
