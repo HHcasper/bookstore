@@ -28,9 +28,16 @@ public class BookController {
         return "index";
     }
 
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
     @GetMapping("/booklist")
-    public String bookList(Model model) {
+    public String bookList(Model model, java.security.Principal principal) {
         model.addAttribute("books", repository.findAll());
+        model.addAttribute("username", principal.getName());
         return "booklist";
     }
 

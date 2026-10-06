@@ -8,6 +8,14 @@
 
     <h1>Books</h1>
 
+    <p>Logged in as: <strong th:text="${username}"></strong></p>
+
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+
+    <br>
+
     <table>
         <thead>
             <tr>
@@ -42,7 +50,7 @@
 
     <br>
 
-    <a href="/addbook">Add Book</a>
+    <a th:href="@{/addbook}">Add Book</a>
 
 </body>
 </html>
